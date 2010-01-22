@@ -1,0 +1,4 @@
+.v-expandingtextarea {
+	overflow: hidden;
+    resize: none;
+}

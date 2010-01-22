@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Class-Path: 
+Vaadin-License-Title: Apache 2.0
+Implementation-Title: ExpandingTextArea
+Vaadin-Package-Version: 1
+Vaadin-Widgetsets: org.vaadin.hene.expandingtextarea.widgetset.Expandi
+ ngtextareaWidgetset
+Implementation-Version: 0.1
+Implementation-Vendor: Henri Kerola
+
