@@ -2,3 +2,7 @@
 	overflow: hidden;
     resize: none;
 }
+
+.v-expandingtextarea.max{
+	overflow-y: scroll;
+}
