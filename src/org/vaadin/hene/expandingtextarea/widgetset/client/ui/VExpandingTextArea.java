@@ -125,4 +125,10 @@ public class VExpandingTextArea extends VTextArea {
             checkHeight();
         }
     }
+
+    @Override
+    protected void onDetach() {
+        heightObserver.cancel();
+        super.onDetach();
+    }
 }
