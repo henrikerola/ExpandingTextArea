@@ -19,7 +19,8 @@ public class VExpandingTextArea extends VTextArea {
 	/** Set the CSS class name to allow styling. */
 	public static final String CLASSNAME = "v-expandingtextarea";
 
-	private int maxRows = 100;
+	private Integer maxRows = null;
+	private boolean immediate = false;
 
 	private static int REPEAT_INTERVAL = 400;
 
@@ -47,9 +48,10 @@ public class VExpandingTextArea extends VTextArea {
 
 		// Check if we have to increase textarea's height
 		int rows = origRows;
-		while (++rows <= maxRows
+		rows++;
+		while ((maxRows == null || rows <= maxRows)
 				&& getElement().getScrollHeight() > getOffsetHeight()) {
-			setRows(rows);
+			setRows(rows++);
 		}
 
 		// Check if we can reduce textarea's height
@@ -68,19 +70,19 @@ public class VExpandingTextArea extends VTextArea {
 		int updatedRowCount = getRows(getElement()) + 1;
 		// Add stylename if we have reached maximum row number, so we can show a
 		// scroll bar
-		if (updatedRowCount > maxRows) {
+		if (maxRows != null && updatedRowCount > maxRows) {
 			addStyleName("max");
+			updatedRowCount = updatedRowCount > maxRows ? maxRows
+					: updatedRowCount;
 		} else {
 			removeStyleName("max");
 		}
-
-		updatedRowCount = updatedRowCount > maxRows ? maxRows : updatedRowCount;
 
 		setRows(updatedRowCount);
 
 		if (origRows != getRows(getElement())) {
 			Util.notifyParentOfSizeChange(this, false);
-			client.updateVariable(id, "rows", getRows(getElement()), false);
+			client.updateVariable(id, "rows", getRows(getElement()), immediate);
 		}
 	}
 
@@ -91,9 +93,12 @@ public class VExpandingTextArea extends VTextArea {
 	public void updateFromUIDL(UIDL uidl, ApplicationConnection client) {
 		super.updateFromUIDL(uidl, client);
 
-		if (uidl.hasVariable("maxRows")) {
-			setMaxRows(uidl.getIntVariable("maxRows"));
+		if (uidl.hasAttribute("maxRows")) {
+			setMaxRows(uidl.getIntAttribute("maxRows"));
+		} else {
+			setMaxRows(null);
 		}
+		immediate = uidl.hasAttribute("immediate");
 
 		addStyleName(VTextArea.CLASSNAME);
 
@@ -105,7 +110,7 @@ public class VExpandingTextArea extends VTextArea {
 		});
 	}
 
-	private void setMaxRows(int maxRows) {
+	private void setMaxRows(Integer maxRows) {
 		this.maxRows = maxRows;
 	}
 

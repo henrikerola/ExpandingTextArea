@@ -9,6 +9,7 @@ import org.vaadin.hene.expandingtextarea.widgetset.client.ui.VExpandingTextArea;
 import com.vaadin.data.Property;
 import com.vaadin.terminal.PaintException;
 import com.vaadin.terminal.PaintTarget;
+import com.vaadin.tools.ReflectTools;
 import com.vaadin.ui.ClientWidget;
 import com.vaadin.ui.TextArea;
 
@@ -19,19 +20,11 @@ import com.vaadin.ui.TextArea;
 @ClientWidget(VExpandingTextArea.class)
 public class ExpandingTextArea extends TextArea {
 
-	private static final Method ROWS_CHANGE_METHOD;
-	static {
-		try {
-			ROWS_CHANGE_METHOD = RowsChangeListener.class.getDeclaredMethod(
-					"rowsChange", new Class[] { RowsChangeEvent.class });
-		} catch (final java.lang.NoSuchMethodException e) {
-			// This should never happen
-			throw new java.lang.RuntimeException("Internal error");
-		}
-	}
+	private static final Method ROWS_CHANGE_METHOD = ReflectTools.findMethod(
+			RowsChangeListener.class, "rowsChange", RowsChangeEvent.class);
 
 	private int rows = 2;
-	private int maxRows = 100;
+	private Integer maxRows = null;
 
 	/**
 	 * Constructs an empty <code>ExpandingTextArea</code> with no caption.
@@ -100,7 +93,9 @@ public class ExpandingTextArea extends TextArea {
 	@Override
 	public void paintContent(PaintTarget target) throws PaintException {
 		target.addVariable(this, "rows", getRows());
-		target.addVariable(this, "maxRows", maxRows);
+		if (maxRows != null) {
+			target.addAttribute("maxRows", maxRows);
+		}
 		super.paintContent(target);
 	}
 
@@ -140,19 +135,26 @@ public class ExpandingTextArea extends TextArea {
 		if (height == -1) {
 			super.setHeight(height, unit);
 		} else {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+					"ExpandingTextArea supports only undefined height");
 		}
 	}
 
 	/**
 	 * Sets the maximum allowed number of rows that the TextArea will grow to,
-	 * default is 100.
+	 * default is null that means that there is no limit for growing.
 	 * 
 	 * @param maxRows
 	 */
-	public void setMaxRows(int maxRows) {
-		this.maxRows = maxRows;
-
+	public void setMaxRows(Integer maxRows) {
+		if (maxRows != null && maxRows < 2) {
+			throw new IllegalArgumentException("maxRows must be >= 2");
+		}
+		if ((this.maxRows == null && maxRows != null)
+				|| !this.maxRows.equals(maxRows)) {
+			this.maxRows = maxRows;
+			requestRepaint();
+		}
 	}
 
 	public int getMaxRows() {
