@@ -4,20 +4,18 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.vaadin.hene.expandingtextarea.widgetset.client.ui.VExpandingTextArea;
+import org.vaadin.hene.expandingtextarea.widgetset.client.ui.ExpandingTextAreaServerRpc;
 
 import com.vaadin.data.Property;
 import com.vaadin.terminal.PaintException;
 import com.vaadin.terminal.PaintTarget;
 import com.vaadin.tools.ReflectTools;
-import com.vaadin.ui.ClientWidget;
 import com.vaadin.ui.TextArea;
 
 /**
  * Server side component for the VExpandingTextArea widget.
  */
 @SuppressWarnings("serial")
-@ClientWidget(VExpandingTextArea.class)
 public class ExpandingTextArea extends TextArea {
 
 	private static final Method ROWS_CHANGE_METHOD = ReflectTools.findMethod(
@@ -25,11 +23,20 @@ public class ExpandingTextArea extends TextArea {
 
 	private int rows = 2;
 	private Integer maxRows = null;
+	
+	private ExpandingTextAreaServerRpc rpc = new ExpandingTextAreaServerRpc() {
+		@Override
+		public void setRows(int rows) {
+			ExpandingTextArea.this.rows = rows;
+			fireRowsChangeEvent();
+		}
+	};
 
 	/**
 	 * Constructs an empty <code>ExpandingTextArea</code> with no caption.
 	 */
 	public ExpandingTextArea() {
+		registerRpc(rpc);
 		setRows(2);
 		setValue("");
 	}
@@ -99,20 +106,6 @@ public class ExpandingTextArea extends TextArea {
 		super.paintContent(target);
 	}
 
-	/**
-	 * Receive and handle events and other variable changes from the client.
-	 * 
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void changeVariables(Object source, Map<String, Object> variables) {
-		super.changeVariables(source, variables);
-		if (variables.containsKey("rows")) {
-			rows = (Integer) variables.get("rows");
-			fireRowsChangeEvent();
-		}
-	}
-
 	@Override
 	public void setRows(int rows) {
 		if (rows < 2) {
@@ -131,7 +124,7 @@ public class ExpandingTextArea extends TextArea {
 	}
 
 	@Override
-	public void setHeight(float height, int unit) {
+	public void setHeight(float height, Unit unit) {
 		if (height == -1) {
 			super.setHeight(height, unit);
 		} else {

@@ -1,14 +1,12 @@
 package org.vaadin.hene.expandingtextarea.widgetset.client.ui;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
-import com.vaadin.terminal.gwt.client.ApplicationConnection;
-import com.vaadin.terminal.gwt.client.UIDL;
-import com.vaadin.terminal.gwt.client.Util;
-import com.vaadin.terminal.gwt.client.ui.VTextArea;
+import com.vaadin.terminal.gwt.client.ui.textarea.VTextArea;
 
 /**
  * Client side widget which communicates with the server. Messages from the
@@ -18,11 +16,10 @@ public class VExpandingTextArea extends VTextArea {
 
     /** Set the CSS class name to allow styling. */
     public static final String CLASSNAME = "v-expandingtextarea";
+    
+    private static int REPEAT_INTERVAL = 400;
 
     private Integer maxRows = null;
-    private boolean immediate = false;
-
-    private static int REPEAT_INTERVAL = 400;
 
     private final HeightObserver heightObserver;
 
@@ -45,7 +42,7 @@ public class VExpandingTextArea extends VTextArea {
         }
     }
 
-    private void checkHeight() {
+    public void checkHeight() {
         int origRows = getRows(getElement());
 
         // Check if we have to increase textarea's height
@@ -83,36 +80,13 @@ public class VExpandingTextArea extends VTextArea {
         setRows(updatedRowCount);
 
         if (origRows != getRows(getElement())) {
-            Util.notifyParentOfSizeChange(this, false);
-            client.updateVariable(id, "rows", getRows(getElement()), immediate);
+        	for (HeightChangedListener listener : heightChangedListeners) {
+        		listener.heightChanged(getRows(getElement()));
+        	}
         }
     }
 
-    /**
-     * Called whenever an update is received from the server
-     */
-    @Override
-    public void updateFromUIDL(UIDL uidl, ApplicationConnection client) {
-        super.updateFromUIDL(uidl, client);
-
-        if (uidl.hasAttribute("maxRows")) {
-            setMaxRows(uidl.getIntAttribute("maxRows"));
-        } else {
-            setMaxRows(null);
-        }
-        immediate = uidl.hasAttribute("immediate");
-
-        addStyleName(VTextArea.CLASSNAME);
-
-        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-
-            public void execute() {
-                checkHeight();
-            }
-        });
-    }
-
-    private void setMaxRows(Integer maxRows) {
+    public void setMaxRows(Integer maxRows) {
         this.maxRows = maxRows;
     }
 
@@ -137,5 +111,19 @@ public class VExpandingTextArea extends VTextArea {
     protected void onDetach() {
         heightObserver.cancel();
         super.onDetach();
+    }
+    
+    List<HeightChangedListener> heightChangedListeners = new ArrayList<VExpandingTextArea.HeightChangedListener>();
+    
+    public interface HeightChangedListener {
+    	void heightChanged(int newHeight);
+    }
+    
+    public void addHeightChangedListener(HeightChangedListener listener) {
+    	heightChangedListeners.add(listener);
+    }
+    
+    public void removeHeightChangedListener(HeightChangedListener listener) {
+    	heightChangedListeners.remove(listener);
     }
 }
