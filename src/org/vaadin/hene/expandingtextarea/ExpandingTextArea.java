@@ -25,7 +25,6 @@ public class ExpandingTextArea extends TextArea {
 	private Integer maxRows = null;
 	
 	private ExpandingTextAreaServerRpc rpc = new ExpandingTextAreaServerRpc() {
-		@Override
 		public void setRows(int rows) {
 			ExpandingTextArea.this.rows = rows;
 			fireRowsChangeEvent();
@@ -133,26 +132,26 @@ public class ExpandingTextArea extends TextArea {
 		}
 	}
 
-	/**
-	 * Sets the maximum allowed number of rows that the TextArea will grow to,
-	 * default is null that means that there is no limit for growing.
-	 * 
-	 * @param maxRows
-	 */
-	public void setMaxRows(Integer maxRows) {
-		if (maxRows != null && maxRows < 2) {
-			throw new IllegalArgumentException("maxRows must be >= 2");
-		}
-		if ((this.maxRows == null && maxRows != null)
-				|| !this.maxRows.equals(maxRows)) {
-			this.maxRows = maxRows;
-			requestRepaint();
-		}
-	}
-
-	public int getMaxRows() {
-		return maxRows;
-	}
+//	/**
+//	 * Sets the maximum allowed number of rows that the TextArea will grow to,
+//	 * default is null that means that there is no limit for growing.
+//	 * 
+//	 * @param maxRows
+//	 */
+//	public void setMaxRows(Integer maxRows) {
+//		if (maxRows != null && maxRows < 2) {
+//			throw new IllegalArgumentException("maxRows must be >= 2");
+//		}
+//		if ((this.maxRows == null && maxRows != null)
+//				|| !this.maxRows.equals(maxRows)) {
+//			this.maxRows = maxRows;
+//			requestRepaint();
+//		}
+//	}
+//
+//	public int getMaxRows() {
+//		return maxRows;
+//	}
 
 	public void addListener(RowsChangeListener listener) {
 		addListener(RowsChangeEvent.class, listener, ROWS_CHANGE_METHOD);

@@ -49,7 +49,6 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
         return (VExpandingTextArea) super.getWidget();
     }
 
-	@Override
 	public void heightChanged(int newHeight) {
 		rpc.setRows(newHeight);
 		getLayoutManager().setNeedsMeasure(this);

@@ -3,13 +3,12 @@ package org.vaadin.hene.expandingtextarea;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeEvent;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeListener;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.terminal.WrappedRequest;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Root;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 public class ExpandingTextAreaRoot extends Root {
 
@@ -18,7 +17,7 @@ public class ExpandingTextAreaRoot extends Root {
 	@Override
 	protected void init(WrappedRequest request) {
 		setCaption("ExpandinTextArea for Vaadin 7");
-		VerticalLayout content = new VerticalLayout();
+		final VerticalLayout content = new VerticalLayout();
 		setContent(content);
 		
 		content.addComponent(new Label(
@@ -38,21 +37,21 @@ public class ExpandingTextAreaRoot extends Root {
 			}
 		});
 
-		final TextField maxRowsTextField = new TextField("Max rows");
-		maxRowsTextField.setInputPrompt("null");
-		maxRowsTextField.setImmediate(true);
-		maxRowsTextField.addListener(new ValueChangeListener() {
-			public void valueChange(ValueChangeEvent event) {
-				try {
-					expandingTextArea.setMaxRows(Integer.parseInt(""
-							+ maxRowsTextField.getValue()));
-					maxRowsTextField.setComponentError(null);
-				} catch (NumberFormatException e) {
-					expandingTextArea.setMaxRows(null);
-				}
-			}
-		});
-		content.addComponent(maxRowsTextField);
+//		final TextField maxRowsTextField = new TextField("Max rows");
+//		maxRowsTextField.setInputPrompt("null");
+//		maxRowsTextField.setImmediate(true);
+//		maxRowsTextField.addListener(new ValueChangeListener() {
+//			public void valueChange(ValueChangeEvent event) {
+//				try {
+//					expandingTextArea.setMaxRows(Integer.parseInt(""
+//							+ maxRowsTextField.getValue()));
+//					maxRowsTextField.setComponentError(null);
+//				} catch (NumberFormatException e) {
+//					expandingTextArea.setMaxRows(null);
+//				}
+//			}
+//		});
+//		content.addComponent(maxRowsTextField);
 	}
 
 }
