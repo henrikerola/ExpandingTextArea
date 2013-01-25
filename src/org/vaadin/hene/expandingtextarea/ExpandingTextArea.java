@@ -2,15 +2,14 @@ package org.vaadin.hene.expandingtextarea;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 import org.vaadin.hene.expandingtextarea.widgetset.client.ui.ExpandingTextAreaServerRpc;
 
 import com.vaadin.data.Property;
-import com.vaadin.terminal.PaintException;
-import com.vaadin.terminal.PaintTarget;
-import com.vaadin.tools.ReflectTools;
+import com.vaadin.server.PaintException;
+import com.vaadin.server.PaintTarget;
 import com.vaadin.ui.TextArea;
+import com.vaadin.util.ReflectTools;
 
 /**
  * Server side component for the VExpandingTextArea widget.
@@ -153,11 +152,11 @@ public class ExpandingTextArea extends TextArea {
 //		return maxRows;
 //	}
 
-	public void addListener(RowsChangeListener listener) {
+	public void addRowsChangeListener(RowsChangeListener listener) {
 		addListener(RowsChangeEvent.class, listener, ROWS_CHANGE_METHOD);
 	}
 
-	public void removeListener(RowsChangeListener listener) {
+	public void removeRowsChangeListener(RowsChangeListener listener) {
 		removeListener(RowsChangeEvent.class, listener, ROWS_CHANGE_METHOD);
 	}
 

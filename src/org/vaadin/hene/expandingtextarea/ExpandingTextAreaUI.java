@@ -3,20 +3,19 @@ package org.vaadin.hene.expandingtextarea;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeEvent;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeListener;
 
-import com.vaadin.terminal.WrappedRequest;
-import com.vaadin.ui.Button;
+import com.vaadin.annotations.Title;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Root;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
-public class ExpandingTextAreaRoot extends Root {
+@Title("ExpandinTextArea")
+public class ExpandingTextAreaUI extends UI {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void init(WrappedRequest request) {
-		setCaption("ExpandinTextArea for Vaadin 7");
+	protected void init(VaadinRequest request) {
 		final VerticalLayout content = new VerticalLayout();
 		setContent(content);
 		
@@ -31,7 +30,7 @@ public class ExpandingTextAreaRoot extends Root {
 		final Label rowsLabel = new Label("" + expandingTextArea.getRows());
 		rowsLabel.setCaption("Rows");
 		content.addComponent(rowsLabel);
-		expandingTextArea.addListener(new RowsChangeListener() {
+		expandingTextArea.addRowsChangeListener(new RowsChangeListener() {
 			public void rowsChange(RowsChangeEvent event) {
 				rowsLabel.setValue("" + event.getRows());
 			}

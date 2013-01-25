@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Vaadin-License-Title: Apache 2.0
 Implementation-Vendor: Henri Kerola
 Implementation-Title: ExpandingTextArea
-Implementation-Version: 1.0.0
+Implementation-Version: 1.0.1
 Vaadin-Package-Version: 1
+Class-Path: 
 Vaadin-Widgetsets: org.vaadin.hene.expandingtextarea.widgetset.Expandi
  ngtextareaWidgetset
-Class-Path: 
 

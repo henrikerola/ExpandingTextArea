@@ -6,12 +6,12 @@ import org.vaadin.hene.expandingtextarea.widgetset.client.ui.VExpandingTextArea.
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.vaadin.terminal.gwt.client.ApplicationConnection;
-import com.vaadin.terminal.gwt.client.UIDL;
-import com.vaadin.terminal.gwt.client.communication.RpcProxy;
-import com.vaadin.terminal.gwt.client.ui.Connect;
-import com.vaadin.terminal.gwt.client.ui.textarea.TextAreaConnector;
-import com.vaadin.terminal.gwt.client.ui.textarea.VTextArea;
+import com.vaadin.client.ApplicationConnection;
+import com.vaadin.client.UIDL;
+import com.vaadin.client.communication.RpcProxy;
+import com.vaadin.client.ui.VTextArea;
+import com.vaadin.client.ui.textarea.TextAreaConnector;
+import com.vaadin.shared.ui.Connect;
 
 @Connect(ExpandingTextArea.class)
 public class ExpandingTextAreaConnector extends TextAreaConnector implements HeightChangedListener {
