@@ -34,6 +34,7 @@ lazy val demo = project.settings(vaadinWebSettings :_*).settings(
   vaadinOptions in compileVaadinWidgetsets := Seq("-strict", "-draftCompile"),
   enableCompileVaadinWidgetsets in resourceGenerators := false,
   javaOptions in vaadinDevMode ++= Seq("-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"),
+  //vaadinWidgetsets := Seq("org.vaadin.hene.expandingtextarea.demo.ExpandingTextAreaDemoWidgetset"),
   // JavaDoc generation causes problems
   sources in doc in Compile := List()
 ).dependsOn(addon)

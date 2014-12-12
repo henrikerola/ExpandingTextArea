@@ -16,12 +16,12 @@
 		<init-param>
 			<description>Vaadin root</description>
 			<param-name>ui</param-name>
-			<param-value>org.vaadin.hene.expandingtextarea.ExpandingTextAreaUI</param-value>
+			<param-value>org.vaadin.hene.expandingtextarea.demo.ExpandingTextAreaUI</param-value>
 		</init-param>
 		<init-param>
 			<description>Application widgetset</description>
 			<param-name>widgetset</param-name>
-			<param-value>org.vaadin.hene.expandingtextarea.widgetset.ExpandingtextareaWidgetset</param-value>
+			<param-value>org.vaadin.hene.expandingtextarea.demo.ExpandingTextAreaDemoWidgetset</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
