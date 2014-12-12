@@ -1,5 +1,6 @@
-package org.vaadin.hene.expandingtextarea;
+package org.vaadin.hene.expandingtextarea.demo;
 
+import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeEvent;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeListener;
 
