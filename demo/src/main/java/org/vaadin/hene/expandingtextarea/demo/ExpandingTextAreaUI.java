@@ -1,5 +1,7 @@
 package org.vaadin.hene.expandingtextarea.demo;
 
+import com.vaadin.annotations.Theme;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeEvent;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeListener;
@@ -10,7 +12,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@Title("ExpandinTextArea")
+@Title("ExpandingTextArea")
+@Theme("valo")
 public class ExpandingTextAreaUI extends UI {
 
 	private static final long serialVersionUID = 1L;
@@ -18,7 +21,13 @@ public class ExpandingTextAreaUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		final VerticalLayout content = new VerticalLayout();
+		content.setMargin(true);
+		content.setSpacing(true);
 		setContent(content);
+
+		Label title = new Label("ExpandingTextArea");
+		title.addStyleName(ValoTheme.LABEL_HUGE);
+		content.addComponent(title);
 		
 		content.addComponent(new Label(
 				"Write text to the field and see how its height expands."));
@@ -36,22 +45,6 @@ public class ExpandingTextAreaUI extends UI {
 				rowsLabel.setValue("" + event.getRows());
 			}
 		});
-
-//		final TextField maxRowsTextField = new TextField("Max rows");
-//		maxRowsTextField.setInputPrompt("null");
-//		maxRowsTextField.setImmediate(true);
-//		maxRowsTextField.addListener(new ValueChangeListener() {
-//			public void valueChange(ValueChangeEvent event) {
-//				try {
-//					expandingTextArea.setMaxRows(Integer.parseInt(""
-//							+ maxRowsTextField.getValue()));
-//					maxRowsTextField.setComponentError(null);
-//				} catch (NumberFormatException e) {
-//					expandingTextArea.setMaxRows(null);
-//				}
-//			}
-//		});
-//		content.addComponent(maxRowsTextField);
 	}
 
 }
