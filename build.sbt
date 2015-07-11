@@ -26,14 +26,15 @@ lazy val addon = project.settings(vaadinAddOnSettings :_*).settings(
   sources in doc in Compile := List()
 )
 
-lazy val demo = project.settings(vaadinWebSettings :_*).settings(
+lazy val demo = project.enablePlugins(JettyPlugin).settings(vaadinWebSettings :_*).settings(
   name := "expandingtextarea-demo",
   artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) => "ExpandingTextArea." + artifact.extension },
-  libraryDependencies := Dependencies.demoDeps,
+  libraryDependencies ++= Dependencies.demoDeps,
   javaOptions in compileVaadinWidgetsets := Seq("-Xss8M", "-Xmx512M", "-XX:MaxPermSize=512M"),
   vaadinOptions in compileVaadinWidgetsets := Seq("-strict", "-draftCompile"),
-  enableCompileVaadinWidgetsets in resourceGenerators := false,
+  skip in compileVaadinWidgetsets in resourceGenerators := true,
   javaOptions in vaadinDevMode ++= Seq("-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"),
   // JavaDoc generation causes problems
-  sources in doc in Compile := List()
+  sources in doc in Compile := List(),
+  webappWebInfClasses := true
 ).dependsOn(addon)

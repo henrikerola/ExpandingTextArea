@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object Dependencies {
 
-  val vaadinVersion = "7.3.6"
+  val vaadinVersion = "7.4.0.beta2"
 
   val vaadinServer = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClient = "com.vaadin" % "vaadin-client" % vaadinVersion
@@ -12,18 +12,15 @@ object Dependencies {
 
   val servletApi = "javax.servlet" % "servlet-api" % "2.5"
 
-  val jetty = "org.eclipse.jetty" % "jetty-webapp" % "8.1.11.v20130520"
-
   val addonDeps = Seq(
     vaadinServer,
     vaadinClient
   )
 
   val demoDeps = Seq(
-    servletApi % "provided",
+    //servletApi % "provided",
     vaadinClientCompiler % "provided",
-    vaadinThemes % "container",
-    jetty % "container"
+    vaadinThemes
   )
 
 }
