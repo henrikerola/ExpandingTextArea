@@ -46,6 +46,7 @@ public class ExpandingTextArea extends TextArea {
 	 *            the caption <code>String</code> for the editor.
 	 */
 	public ExpandingTextArea(String caption) {
+		registerRpc(rpc);
 		setRows(2);
 		setCaption(caption);
 	}
@@ -58,6 +59,7 @@ public class ExpandingTextArea extends TextArea {
 	 *            the Property to be edited with this editor.
 	 */
 	public ExpandingTextArea(Property dataSource) {
+		registerRpc(rpc);
 		setRows(2);
 		setPropertyDataSource(dataSource);
 	}
@@ -90,6 +92,7 @@ public class ExpandingTextArea extends TextArea {
 	 *            the initial text content of the editor.
 	 */
 	public ExpandingTextArea(String caption, String value) {
+		registerRpc(rpc);
 		setRows(2);
 		setValue(value);
 		setCaption(caption);
