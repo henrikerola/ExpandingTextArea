@@ -184,7 +184,7 @@ public class ExpandingTextArea extends TextArea {
 
 	public interface RowsChangeListener extends Serializable {
 
-		public void rowsChange(RowsChangeEvent event);
+		void rowsChange(RowsChangeEvent event);
 	}
 
 }
