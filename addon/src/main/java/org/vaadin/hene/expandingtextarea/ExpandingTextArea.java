@@ -11,8 +11,12 @@ import com.vaadin.server.PaintTarget;
 import com.vaadin.ui.TextArea;
 import com.vaadin.util.ReflectTools;
 
+
 /**
- * Server side component for the VExpandingTextArea widget.
+ * An extended version of {@link TextArea} that adapts its height to the
+ * textual content.
+ *
+ * @author Henri Kerola / Vaadin
  */
 @SuppressWarnings("serial")
 public class ExpandingTextArea extends TextArea {
