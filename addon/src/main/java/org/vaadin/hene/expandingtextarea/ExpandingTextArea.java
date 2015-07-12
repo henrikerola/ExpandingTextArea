@@ -88,7 +88,7 @@ public class ExpandingTextArea extends TextArea {
 	 * 
 	 * @param caption
 	 *            the caption <code>String</code> for the editor.
-	 * @param text
+	 * @param value
 	 *            the initial text content of the editor.
 	 */
 	public ExpandingTextArea(String caption, String value) {
@@ -155,10 +155,16 @@ public class ExpandingTextArea extends TextArea {
 //		return maxRows;
 //	}
 
+	/**
+	 * Adds a {@link RowsChangeListener} to the component.
+	 */
 	public void addRowsChangeListener(RowsChangeListener listener) {
 		addListener(RowsChangeEvent.class, listener, ROWS_CHANGE_METHOD);
 	}
 
+	/**
+	 * Removes a {@link RowsChangeListener} from the component.
+	 */
 	public void removeRowsChangeListener(RowsChangeListener listener) {
 		removeListener(RowsChangeEvent.class, listener, ROWS_CHANGE_METHOD);
 	}
@@ -182,6 +188,16 @@ public class ExpandingTextArea extends TextArea {
 		}
 	}
 
+	/**
+	 * Listener for row count changes. When text in {@link ExpandingTextArea}
+	 * is modified (by user or programmatically) and the modification affects
+	 * to row count, then possible {@link RowsChangeListener} added to the
+	 * component are called.
+	 *
+	 * Please note, that for a disabled {@link ExpandingTextArea} listeners
+	 * won't be called. This is because Vaadin doesn't allow a disabled
+	 * component to call a RPC from client to server.
+	 */
 	public interface RowsChangeListener extends Serializable {
 
 		void rowsChange(RowsChangeEvent event);
