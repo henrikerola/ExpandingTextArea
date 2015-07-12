@@ -90,6 +90,10 @@ public class VExpandingTextArea extends VTextArea {
         this.maxRows = maxRows;
     }
 
+    public int getRows() {
+        return getRows(getElement());
+    }
+
     private native int getRows(Element e)
     /*-{
     	try {

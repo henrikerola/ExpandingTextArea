@@ -15,9 +15,11 @@ import com.vaadin.shared.ui.Connect;
 
 @Connect(ExpandingTextArea.class)
 public class ExpandingTextAreaConnector extends TextAreaConnector implements HeightChangedListener {
-	
+
 	private ExpandingTextAreaServerRpc rpc = RpcProxy.create(ExpandingTextAreaServerRpc.class, this);
-	
+
+    private boolean sendRowsToServerWhenEnabled = false;
+
     @Override
     public void updateFromUIDL(UIDL uidl, ApplicationConnection client) {
         super.updateFromUIDL(uidl, client);
@@ -35,6 +37,11 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
         		getWidget().checkHeight();
         	}
         });
+
+        if (sendRowsToServerWhenEnabled && isEnabled()) {
+            rpc.setRows(getWidget().getRows());
+            sendRowsToServerWhenEnabled = false;
+        }
     }
 
     @Override
@@ -50,7 +57,14 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
     }
 
 	public void heightChanged(int newHeight) {
-		rpc.setRows(newHeight);
+        // Vaadin doesn't allow requests from disabled components.
+        // If the component is disabled, set a flag to true so that row count
+        // is transferred when component is enabled (see updateFromUIDL).
+        if (isEnabled()) {
+            rpc.setRows(newHeight);
+        } else {
+            sendRowsToServerWhenEnabled = true;
+        }
 		getLayoutManager().setNeedsMeasure(this);
 	}
 
