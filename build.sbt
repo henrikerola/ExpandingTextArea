@@ -4,7 +4,7 @@ import sbt.ScalaVersion
 
 name := "ExpandingTextArea"
 
-version in ThisBuild := "1.1-SNAPSHOT"
+version in ThisBuild := "1.1.0"
 
 organization in ThisBuild := "org.vaadin.hene"
 
