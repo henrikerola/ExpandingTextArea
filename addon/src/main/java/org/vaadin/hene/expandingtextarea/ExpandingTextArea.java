@@ -138,26 +138,30 @@ public class ExpandingTextArea extends TextArea {
 		}
 	}
 
-//	/**
-//	 * Sets the maximum allowed number of rows that the TextArea will grow to,
-//	 * default is null that means that there is no limit for growing.
-//	 * 
-//	 * @param maxRows
-//	 */
-//	public void setMaxRows(Integer maxRows) {
-//		if (maxRows != null && maxRows < 2) {
-//			throw new IllegalArgumentException("maxRows must be >= 2");
-//		}
-//		if ((this.maxRows == null && maxRows != null)
-//				|| !this.maxRows.equals(maxRows)) {
-//			this.maxRows = maxRows;
-//			requestRepaint();
-//		}
-//	}
-//
-//	public int getMaxRows() {
-//		return maxRows;
-//	}
+	/**
+	 * Sets the maximum allowed number of rows that the {@link ExpandingTextArea} will grow to,
+	 * default is null that means that there is no limit for growing.
+	 *
+	 * @param maxRows null or >= 2.
+	 */
+	public void setMaxRows(Integer maxRows) {
+		if (maxRows != null && maxRows < 2) {
+			throw new IllegalArgumentException("maxRows must be >= 2");
+		}
+		if ((this.maxRows == null && maxRows != null)
+				|| !this.maxRows.equals(maxRows)) {
+			this.maxRows = maxRows;
+			requestRepaint();
+		}
+	}
+
+	/**
+	 * Returns the maximum allowed number of rows that the {@link ExpandingTextArea} will grow to,
+	 * default is null that means that there is no limit for growing.
+	 */
+	public int getMaxRows() {
+		return maxRows;
+	}
 
 	/**
 	 * Adds a {@link RowsChangeListener} to the component.
