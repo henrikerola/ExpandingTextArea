@@ -1,6 +1,9 @@
 package org.vaadin.hene.expandingtextarea.demo;
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
+import com.vaadin.data.Property;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeEvent;
@@ -8,12 +11,10 @@ import org.vaadin.hene.expandingtextarea.ExpandingTextArea.RowsChangeListener;
 
 import com.vaadin.annotations.Title;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 @Title("ExpandingTextArea")
 @Theme("valo")
+@PreserveOnRefresh
 public class ExpandingTextAreaUI extends UI {
 
 	private static final long serialVersionUID = 1L;
@@ -45,6 +46,18 @@ public class ExpandingTextAreaUI extends UI {
 				rowsLabel.setValue("" + event.getRows());
 			}
 		});
+
+		final NativeSelect maxRows = new NativeSelect("Max rows");
+		maxRows.addValueChangeListener(new Property.ValueChangeListener() {
+			@Override
+			public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+				expandingTextArea.setMaxRows((Integer) maxRows.getValue());
+			}
+		});
+		maxRows.addItem(2);
+		maxRows.addItem(5);
+		maxRows.addItem(10);
+		content.addComponent(maxRows);
 	}
 
 }
