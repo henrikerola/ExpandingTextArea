@@ -142,6 +142,8 @@ public class ExpandingTextArea extends TextArea {
 	 * Sets the maximum allowed number of rows that the {@link ExpandingTextArea} will grow to,
 	 * default is null that means that there is no limit for growing.
 	 *
+	 * Please note that max rows doesn't work very well with IE8.
+	 *
 	 * @param maxRows null or >= 2.
 	 */
 	public void setMaxRows(Integer maxRows) {
@@ -158,6 +160,8 @@ public class ExpandingTextArea extends TextArea {
 	/**
 	 * Returns the maximum allowed number of rows that the {@link ExpandingTextArea} will grow to,
 	 * default is null that means that there is no limit for growing.
+	 *
+	 * Please note that max rows doesn't work very well with IE8.
 	 */
 	public int getMaxRows() {
 		return maxRows;
