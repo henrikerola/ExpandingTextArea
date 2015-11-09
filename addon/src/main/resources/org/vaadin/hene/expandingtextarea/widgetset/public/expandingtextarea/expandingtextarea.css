@@ -3,6 +3,6 @@
     resize: none;
 }
 
-.v-expandingtextarea.max{
+.v-expandingtextarea.max {
 	overflow-y: scroll;
 }
