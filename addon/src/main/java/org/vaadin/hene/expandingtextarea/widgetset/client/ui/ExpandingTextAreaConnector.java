@@ -45,6 +45,12 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
     }
 
     @Override
+    protected void updateWidgetStyleNames() {
+        super.updateWidgetStyleNames();
+        getWidget().addStyleName(VExpandingTextArea.CLASSNAME);
+    }
+
+    @Override
     protected VExpandingTextArea createWidget() {
     	VExpandingTextArea widget = GWT.create(VExpandingTextArea.class);
     	widget.addHeightChangedListener(this);
