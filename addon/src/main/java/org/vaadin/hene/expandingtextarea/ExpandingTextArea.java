@@ -27,6 +27,7 @@ public class ExpandingTextArea extends TextArea {
 	private int rows = 2;
 	private Integer maxRows = null;
 	
+	
 	private ExpandingTextAreaServerRpc rpc = new ExpandingTextAreaServerRpc() {
 		public void setRows(int rows) {
 			ExpandingTextArea.this.rows = rows;
@@ -39,10 +40,29 @@ public class ExpandingTextArea extends TextArea {
 	 */
 	public ExpandingTextArea() {
 		registerRpc(rpc);
-		setRows(2);
+		setRows(getInitialRows());
 		setValue("");
 	}
+	
+	/**
+	* Return Intial Rows
+	*/
 
+    protected int getInitialRows() {
+        return rows;
+    }
+    
+	/**
+	* Set Intial Rows
+	*/
+	
+    public void setInitialRows(int rows){
+    	ExpandingTextArea.this.rows=rows;
+		if (rows < 1) {
+			throw new IllegalArgumentException("Initial rows must be >= 1");
+		}
+    }
+	
 	/**
 	 * Constructs an empty <code>ExpandingTextArea</code> with given caption.
 	 * 
@@ -51,7 +71,7 @@ public class ExpandingTextArea extends TextArea {
 	 */
 	public ExpandingTextArea(String caption) {
 		registerRpc(rpc);
-		setRows(2);
+		setRows(getInitialRows());
 		setCaption(caption);
 	}
 
@@ -64,7 +84,7 @@ public class ExpandingTextArea extends TextArea {
 	 */
 	public ExpandingTextArea(Property dataSource) {
 		registerRpc(rpc);
-		setRows(2);
+		setRows(getInitialRows());
 		setPropertyDataSource(dataSource);
 	}
 
@@ -97,7 +117,7 @@ public class ExpandingTextArea extends TextArea {
 	 */
 	public ExpandingTextArea(String caption, String value) {
 		registerRpc(rpc);
-		setRows(2);
+		setRows(getInitialRows());
 		setValue(value);
 		setCaption(caption);
 	}
@@ -113,8 +133,8 @@ public class ExpandingTextArea extends TextArea {
 
 	@Override
 	public void setRows(int rows) {
-		if (rows < 2) {
-			throw new IllegalArgumentException("rows must be >= 2");
+		if (rows < getInitialRows()) {
+			throw new IllegalArgumentException("rows must be >= " + getInitialRows());
 		}
 		if (this.rows != rows) {
 			this.rows = rows;
@@ -144,11 +164,11 @@ public class ExpandingTextArea extends TextArea {
 	 *
 	 * Please note that max rows doesn't work very well with IE8.
 	 *
-	 * @param maxRows null or >= 2.
+	 * @param maxRows null or >= getInitialRows().
 	 */
 	public void setMaxRows(Integer maxRows) {
-		if (maxRows != null && maxRows < 2) {
-			throw new IllegalArgumentException("maxRows must be >= 2");
+		if (maxRows != null && maxRows < getInitialRows()) {
+			throw new IllegalArgumentException("maxRows must be >= " + getInitialRows());
 		}
 		if ((this.maxRows == null && maxRows != null)
 				|| !this.maxRows.equals(maxRows)) {
