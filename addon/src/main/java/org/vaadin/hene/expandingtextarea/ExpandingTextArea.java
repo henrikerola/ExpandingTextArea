@@ -45,25 +45,6 @@ public class ExpandingTextArea extends TextArea {
 	}
 	
 	/**
-	* Return Intial Rows
-	*/
-
-    protected int getInitialRows() {
-        return rows;
-    }
-    
-	/**
-	* Set Intial Rows
-	*/
-	
-    public void setInitialRows(int rows){
-    	ExpandingTextArea.this.rows=rows;
-		if (rows < 1) {
-			throw new IllegalArgumentException("Initial rows must be >= 1");
-		}
-    }
-	
-	/**
 	 * Constructs an empty <code>ExpandingTextArea</code> with given caption.
 	 * 
 	 * @param caption
@@ -146,6 +127,23 @@ public class ExpandingTextArea extends TextArea {
 	@Override
 	public int getRows() {
 		return rows;
+	}
+
+	/**
+	 * Return Initial Rows
+	 */
+	protected int getInitialRows() {
+		return rows;
+	}
+
+	/**
+	 * Set Initial Rows
+	 */
+	public void setInitialRows(int rows){
+		ExpandingTextArea.this.rows=rows;
+		if (rows < 1) {
+			throw new IllegalArgumentException("Initial rows must be >= 1");
+		}
 	}
 
 	@Override
