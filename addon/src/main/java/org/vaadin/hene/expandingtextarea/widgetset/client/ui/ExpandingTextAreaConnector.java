@@ -29,13 +29,6 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
     @Override
     public void updateFromUIDL(UIDL uidl, ApplicationConnection client) {
         super.updateFromUIDL(uidl, client);
-
-        if (uidl.hasAttribute("maxRows")) {
-            getWidget().setMaxRows(uidl.getIntAttribute("maxRows"));
-        } else {
-        	getWidget().setMaxRows(null);
-        }
-
         getWidget().addStyleName(VTextArea.CLASSNAME);
 
         Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -53,13 +46,8 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
     @Override
     public void onStateChanged(StateChangeEvent event) {
         super.onStateChanged(event);
+        getWidget().setMaxRows(getState().maxRows);
         getWidget().setAppendExtraRow(getState().appendExtraRow);
-
-        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-            public void execute() {
-                getWidget().checkHeight();
-            }
-        });
     }
 
     @Override

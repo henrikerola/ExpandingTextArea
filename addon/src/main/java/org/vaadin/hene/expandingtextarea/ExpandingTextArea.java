@@ -26,7 +26,6 @@ public class ExpandingTextArea extends TextArea {
 			RowsChangeListener.class, "rowsChange", RowsChangeEvent.class);
 
 	private int rows = 2;
-	private Integer maxRows = null;
 
 	private ExpandingTextAreaServerRpc rpc = new ExpandingTextAreaServerRpc() {
 		public void setRows(int rows) {
@@ -116,9 +115,6 @@ public class ExpandingTextArea extends TextArea {
 	@Override
 	public void paintContent(PaintTarget target) throws PaintException {
 		target.addVariable(this, "rows", getRows());
-		if (maxRows != null) {
-			target.addAttribute("maxRows", maxRows);
-		}
 		super.paintContent(target);
 	}
 
@@ -178,11 +174,7 @@ public class ExpandingTextArea extends TextArea {
 //		if (maxRows != null && maxRows < getInitialRows()) {
 //			throw new IllegalArgumentException("maxRows must be >= " + getInitialRows());
 //		}
-		if ((this.maxRows == null && maxRows != null)
-				|| !this.maxRows.equals(maxRows)) {
-			this.maxRows = maxRows;
-			requestRepaint();
-		}
+		getState().maxRows = maxRows;
 	}
 
 	/**
@@ -192,7 +184,7 @@ public class ExpandingTextArea extends TextArea {
 	 * Please note that max rows doesn't work very well with IE8.
 	 */
 	public int getMaxRows() {
-		return maxRows;
+		return getState(false).maxRows;
 	}
 
 	/**

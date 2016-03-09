@@ -7,5 +7,7 @@ import com.vaadin.shared.ui.textarea.TextAreaState;
  */
 public class ExpandingTextAreaState extends TextAreaState {
 
+    public Integer maxRows = null;
+
     public boolean appendExtraRow = true;
 }
