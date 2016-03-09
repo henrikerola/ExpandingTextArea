@@ -10,6 +10,7 @@ import com.vaadin.server.PaintException;
 import com.vaadin.server.PaintTarget;
 import com.vaadin.ui.TextArea;
 import com.vaadin.util.ReflectTools;
+import org.vaadin.hene.expandingtextarea.widgetset.client.ui.ExpandingTextAreaState;
 
 
 /**
@@ -26,8 +27,7 @@ public class ExpandingTextArea extends TextArea {
 
 	private int rows = 2;
 	private Integer maxRows = null;
-	
-	
+
 	private ExpandingTextAreaServerRpc rpc = new ExpandingTextAreaServerRpc() {
 		public void setRows(int rows) {
 			ExpandingTextArea.this.rows = rows;
@@ -104,6 +104,16 @@ public class ExpandingTextArea extends TextArea {
 	}
 
 	@Override
+	protected ExpandingTextAreaState getState() {
+		return (ExpandingTextAreaState) super.getState();
+	}
+
+	@Override
+	protected ExpandingTextAreaState getState(boolean markAsDirty) {
+		return (ExpandingTextAreaState) super.getState(markAsDirty);
+	}
+
+	@Override
 	public void paintContent(PaintTarget target) throws PaintException {
 		target.addVariable(this, "rows", getRows());
 		if (maxRows != null) {
@@ -165,9 +175,9 @@ public class ExpandingTextArea extends TextArea {
 	 * @param maxRows null or >= getInitialRows().
 	 */
 	public void setMaxRows(Integer maxRows) {
-		if (maxRows != null && maxRows < getInitialRows()) {
-			throw new IllegalArgumentException("maxRows must be >= " + getInitialRows());
-		}
+//		if (maxRows != null && maxRows < getInitialRows()) {
+//			throw new IllegalArgumentException("maxRows must be >= " + getInitialRows());
+//		}
 		if ((this.maxRows == null && maxRows != null)
 				|| !this.maxRows.equals(maxRows)) {
 			this.maxRows = maxRows;
@@ -183,6 +193,20 @@ public class ExpandingTextArea extends TextArea {
 	 */
 	public int getMaxRows() {
 		return maxRows;
+	}
+
+	/**
+	 * Should last row always be an empty row?
+	 */
+	public void setAppendExtraRow(boolean appendExtraRow) {
+		getState().appendExtraRow = appendExtraRow;
+	}
+
+	/**
+	 * Should last row always be an empty row?
+	 */
+	public boolean isAppendExtraRow() {
+		return getState(false).appendExtraRow;
 	}
 
 	/**

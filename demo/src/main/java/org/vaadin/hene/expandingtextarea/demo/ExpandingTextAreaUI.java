@@ -47,6 +47,15 @@ public class ExpandingTextAreaUI extends UI {
 			}
 		});
 
+		final CheckBox appendExtraRow = new CheckBox("Append extra row", expandingTextArea.isAppendExtraRow());
+		appendExtraRow.addValueChangeListener(new Property.ValueChangeListener() {
+			@Override
+			public void valueChange(Property.ValueChangeEvent event) {
+				expandingTextArea.setAppendExtraRow(appendExtraRow.getValue());
+			}
+		});
+		content.addComponent(appendExtraRow);
+
 		final NativeSelect maxRows = new NativeSelect("Max rows");
 		maxRows.addValueChangeListener(new Property.ValueChangeListener() {
 			@Override

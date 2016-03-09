@@ -23,6 +23,8 @@ public class VExpandingTextArea extends VTextArea {
 
     private final HeightObserver heightObserver;
 
+    private boolean appendExtraRow = false;
+
     public VExpandingTextArea() {
         setStyleName(CLASSNAME);
         sinkEvents(Event.ONFOCUS | Event.ONFOCUS);
@@ -66,7 +68,8 @@ public class VExpandingTextArea extends VTextArea {
             }
         }
 
-        int updatedRowCount = getRows(getElement()) + 1;
+        int extraRow = appendExtraRow ? 1 : 0;
+        int updatedRowCount = getRows(getElement()) + extraRow;
         // Add stylename if we have reached maximum row number, so we can show a
         // scroll bar
         if (maxRows != null && updatedRowCount > maxRows) {
@@ -88,6 +91,10 @@ public class VExpandingTextArea extends VTextArea {
 
     public void setMaxRows(Integer maxRows) {
         this.maxRows = maxRows;
+    }
+
+    public void setAppendExtraRow(boolean appendExtraRow) {
+        this.appendExtraRow = appendExtraRow;
     }
 
     public int getRows() {

@@ -1,5 +1,6 @@
 package org.vaadin.hene.expandingtextarea.widgetset.client.ui;
 
+import com.vaadin.client.communication.StateChangeEvent;
 import org.vaadin.hene.expandingtextarea.ExpandingTextArea;
 import org.vaadin.hene.expandingtextarea.widgetset.client.ui.VExpandingTextArea.HeightChangedListener;
 
@@ -19,6 +20,11 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
 	private ExpandingTextAreaServerRpc rpc = RpcProxy.create(ExpandingTextAreaServerRpc.class, this);
 
     private boolean sendRowsToServerWhenEnabled = false;
+
+    @Override
+    public ExpandingTextAreaState getState() {
+        return (ExpandingTextAreaState) super.getState();
+    }
 
     @Override
     public void updateFromUIDL(UIDL uidl, ApplicationConnection client) {
@@ -42,6 +48,18 @@ public class ExpandingTextAreaConnector extends TextAreaConnector implements Hei
             rpc.setRows(getWidget().getRows());
             sendRowsToServerWhenEnabled = false;
         }
+    }
+
+    @Override
+    public void onStateChanged(StateChangeEvent event) {
+        super.onStateChanged(event);
+        getWidget().setAppendExtraRow(getState().appendExtraRow);
+
+        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            public void execute() {
+                getWidget().checkHeight();
+            }
+        });
     }
 
     @Override
